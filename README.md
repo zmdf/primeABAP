@@ -1,9 +1,9 @@
 # primesABAP
-ABAP sample implementations of 'base' sieve algorithm for determining prime numbers up to a certain limit.
+ABAP sample implementations of 'base' sieve algorithm for determining prime numbers up to a certain limit. ABAP (*Advanced Business Application Programming*, originally *Allgemeiner Berichts-Aufbereitungs-Prozessor*, German for "general report preparation processor") is a proprietary language created by the German software company SAP SE. 
 
 ## Details
 There are two implementations:
-- one using ABAP OO, `zmdf_r_getprimes.abap`, with modern statements and expressions, as well as new notations and naming conventions
+- one using ABAP OO, `zmdf_r_getprimes.abap`, with modern statements and expressions, as well as new notations and naming conventions. This code can be run on SAP application servers based on NetWeaver 7.40 or later.
 - one using classic, procedural ABAP, `zmdf_r_getprimes.abap`, with alternative statements more faithful to ABAP origins as well as notations established (and still widely used) in SAP business applications 
 
 Both implementations follows closely Dave Plummer's specifications from the  ["drag-race"](https://github.com/PlummersSoftwareLLC/Primes/blob/drag-race/CONTRIBUTING.md) - especially [the rules](https://github.com/PlummersSoftwareLLC/Primes/blob/drag-race/CONTRIBUTING.md#rules).
