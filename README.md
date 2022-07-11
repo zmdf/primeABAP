@@ -14,13 +14,15 @@ The chosen algorithm is "base" (used by @davepl in the YouTube video that spawne
 ![Algorithm](https://img.shields.io/badge/Algorithm-base-green) ![Faithfulness](https://img.shields.io/badge/Faithful-yes-green) ![Parallelism](https://img.shields.io/badge/Parallel-no-green) ![Bit count](https://img.shields.io/badge/Bits-1-green)
 
 ## Output
-The [rule](https://github.com/PlummersSoftwareLLC/Primes/blob/drag-race/CONTRIBUTING.md#output)-compliant outputs of both reports, executed on a application server running ABAP Platform 2022 (SAP_BASIS 758) on a virtual equivalent of a 2GHz Xeon: 
+The [rule](https://github.com/PlummersSoftwareLLC/Primes/blob/drag-race/CONTRIBUTING.md#output)-compliant outputs of both reports, executed on a application server running ABAP Platform 2022 (SAP_BASIS 7.57) on a virtual equivalent of a 2GHz Xeon: 
 - for modern ABAP: `zmdf;74;5.013153;1;algorithm=base,faithful=yes,bits=1`
 - for classic ABAP: `zmdf-classicABAP;84;5.055994;1;algorithm=base,faithful=yes,bits=1`
 
-It's noteworthy that the "old" legacy code runs faster. The measured blocks differ minimally: in the "modern" version, an ABAP object is instantiated and the algorithm is executed using a method call: `sieve->execute( ).`, whereas in the "classic" version a static procedure ("form-routine" in SAP jargon) is called: `PERFORM execute_sieve CHANGING ls_state.`. The code in both method and form-routine is identical (up to different coding styles, that should not impact the runtime...)
+It's noteworthy that the "old" legacy code runs faster, it completes 84 passes before breaking the 5 seconds time limit. The measured blocks differ minimally: in the "modern" version, an ABAP object is instantiated and the algorithm is executed using a method call: `sieve->execute( ).`, whereas in the "classic" version a static procedure (a "form-routine" in SAP jargon) is called: `PERFORM execute_sieve CHANGING ls_state.`. The code in both method and form-routine is identical (up to different coding styles, that should not impact the runtime...)
 
-A publicly available Docker image [Mini-SAP Developer Edition]( https://blogs.sap.com/2021/02/15/sap-abap-platform-1909-developer-edition-available-soon/) should be released soon by SAP. Until then, one can only try the programs in his/her benevolent employer's SAP sandbox systems (if lucky enough to have developer access to them, that is).
+A publicly available Docker image with a [SAP Developer Edition for ABAP Platform]( https://blogs.sap.com/2021/02/15/sap-abap-platform-1909-developer-edition-available-soon/) should be released soon by SAP. Until then, one can only try the programs in his/her benevolent employer's SAP sandbox systems (if lucky enough to have developer access to them, that is).
+
+To put the above numbers in perspective: about 1.000 times slower than native executables written in new languages like Rust, Nim or Zig - see [results](https://plummerssoftwarellc.github.io/PrimeView/report?id=davepl-1657536492.json&hi=False&hf=False&hp=False&fi=&fp=mt&fa=wh~ot&ff=uf&fb=uk~ot&tp=False&sc=pp&sd=True) from today (11.07.2022) comparison run, performed admittedly on a more powerful CPU.  
 
 ## Screenshots
 Sample initial screen in SAP GUI for primes up to 100 and full listing
