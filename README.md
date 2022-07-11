@@ -19,7 +19,8 @@ zmdf;74;5.013153;1;algorithm=base,faithful=yes,bits=1
 ```
 zmdf-classicABAP;84;5.055994;1;algorithm=base,faithful=yes,bits=1                                                       
 ```
-It's noteworthy that the "old" legacy code runs faster. The measured blocks differ minimally: in the "modern" version, an ABAP object is instantiated and the algorithm is executed using a method call (`sieve->execute( ).`), whereas in the "classic" version a static procedure ("form-routine" in SAP jargon) is called (`PERFORM execute_sieve CHANGING ls_state.`). The code in both method and form-routine is identical (up to different coding styles, that should not impact the runtime...)
+It's noteworthy that the "old" legacy code runs faster. The measured blocks differ minimally: in the "modern" version, an ABAP object is instantiated and the algorithm is executed using a method call `sieve->execute( ).`, whereas in the "classic" version a static procedure ("form-routine" in SAP jargon) is called `PERFORM execute_sieve CHANGING ls_state.`. 
+The code in both method and form-routine is identical (up to different coding styles, that should not impact the runtime...)
 
 ## Screenshots
 Sample initial screen in SAP GUI for primes up to 100 and full listing
@@ -35,4 +36,4 @@ Sample output in SAP GUI for primes up to 1 Mio (modern code)
 ![Sample output for up to 1 Mio](/screenshots/SAPGUI-Results-1Mio.png)
 
 Sample output in SAP GUI for primes up to 1 Mio (classical ABAP code)
-![Sample output for up to 1 Mio](/screenshots/SAPGUI-Results-1Mio-classical.png)
+![Sample output for up to 1 Mio (classic ABAP)](/screenshots/SAPGUI-Results-1Mio-classic.png)
