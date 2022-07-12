@@ -244,7 +244,4 @@ FORM set_expectations.
   ls_exp_result-number = 1000000000.
   ls_exp_result-count  = 50847534.
   INSERT ls_exp_result INTO TABLE gt_exp_result.
-  ls_exp_result-number = 10000000000.
-  ls_exp_result-count  = 455052511.
-  INSERT ls_exp_result INTO TABLE gt_exp_result.
 ENDFORM.
