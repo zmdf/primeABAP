@@ -55,17 +55,13 @@ START-OF-SELECTION.
 CLASS lcl_sieve IMPLEMENTATION.
 *--------------------------------------------------------------------*
 METHOD constructor.
-  IF maxNum GT 0.
-    maxNumber = maxNum.
-  ELSEIF maxNum EQ 0.
-    maxNumber = 1000000 ##number_ok.
-  ELSE.
-    TRY.
-        maxNumber = abs( maxNum ).
+  TRY.
+        maxNumber = COND #( WHEN maxNum GT 1 THEN maxNum
+                            WHEN maxNum GE 0 THEN 1000000
+                            ELSE abs( maxNum ) ).
       CATCH cx_sy_arithmetic_overflow. "abs doesn't like min_int...
         maxNumber = cl_abap_math=>max_int4.
-    ENDTRY.
-  ENDIF.
+  ENDTRY.
   validResults = VALUE #(
       ( limit = 10 count = 4 )
       ( limit = 100 count = 25 )
@@ -76,7 +72,6 @@ METHOD constructor.
       ( limit = 10000000 count = 664579 )
       ( limit = 100000000 count = 5761455 )
       ( limit = 1000000000 count = 50847534 )
-      ( limit = 10000000000 count = 455052511 ) 
     ) ##number_ok.
 ENDMETHOD.
 
