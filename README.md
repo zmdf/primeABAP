@@ -23,7 +23,7 @@ It's noteworthy that the "old" legacy code runs faster, it completes 84 passes b
 
 A publicly available Docker image with a [SAP Developer Edition for ABAP Platform]( https://blogs.sap.com/2021/02/15/sap-abap-platform-1909-developer-edition-available-soon/) should be released soon by SAP. Until then, one can only try the programs in his/her benevolent employer's SAP sandbox systems (if lucky enough to have developer access to them, that is).
 
-To put the above numbers in perspective: about 800 times slower than native executables implementing the same algorithm under the same parameters in languages like Rust, Nim or Zig - see [results](https://plummerssoftwarellc.github.io/PrimeView/report?id=davepl-1657536492.json&hi=False&hf=False&hp=False&fi=&fp=mt&fa=wh~ot&ff=uf&fb=uk~ot&tp=False&sc=pp&sd=True) of today's (11.07.2022) comparison, performed admittedly on a more powerful CPU. 
+To put the above numbers in perspective: about 800 times slower than native executables implementing the same algorithm under the same parameters in languages like Rust, Nim or Zig - see e.g. the [results](https://plummerssoftwarellc.github.io/PrimeView/report?id=davepl-1657536492.json&hi=False&hf=False&hp=False&fi=&fp=mt&fa=wh~ot&ff=uf&fb=uk~ot&tp=False&sc=pp&sd=True) of the comparison executed on 11.07.2022, admittedly on a more powerful CPU. 
 
 ## Screenshots
 Sample initial screen in SAP GUI for primes up to 100 and full listing
