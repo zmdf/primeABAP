@@ -75,6 +75,8 @@ METHOD constructor.
       ( limit = 1000000 count = 78498 )
       ( limit = 10000000 count = 664579 )
       ( limit = 100000000 count = 5761455 )
+      ( limit = 1000000000 count = 50847534 )
+      ( limit = 10000000000 count = 455052511 ) 
     ) ##number_ok.
 ENDMETHOD.
 
