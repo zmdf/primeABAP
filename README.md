@@ -1,15 +1,16 @@
 # primesABAP
 ABAP sample implementations of 'base' sieve algorithm for determining prime numbers up to a certain limit. ABAP (*Advanced Business Application Programming*, originally *Allgemeiner Berichts-Aufbereitungs-Prozessor*, German for "general report preparation processor") is a proprietary language created by the German software company SAP SE. 
 
+These source code are merely a way to showcase how ABAP code looks like - since the algorithm is very well known, it's easier to compare with code written in other languages. 
 
 ## Details
 There are two implementations, written as ABAP Reports:
 - one using ABAP OO, `zmdf_r_getprimes.abap`, with modern statements and expressions, as well as new notations and naming conventions. This code can be run on SAP application servers based on NetWeaver 7.40 or later.
 - one using classic, procedural ABAP, `zmdf_r_getprimes.abap`, with alternative statements more faithful to ABAP origins as well as notations established (and still widely used) in SAP business applications 
 
-Both implementations follows closely Dave Plummer's specifications from the  ["drag-race"](https://github.com/PlummersSoftwareLLC/Primes/blob/drag-race/CONTRIBUTING.md) - especially [the rules](https://github.com/PlummersSoftwareLLC/Primes/blob/drag-race/CONTRIBUTING.md#rules).
+Both implementations follows closely the specifications from the ["Primes" drag-race](https://github.com/PlummersSoftwareLLC/Primes/blob/drag-race/CONTRIBUTING.md) - especially [the rules](https://github.com/PlummersSoftwareLLC/Primes/blob/drag-race/CONTRIBUTING.md#rules).
 
-The chosen algorithm is "base" (used by @davepl in the YouTube video that spawned the drag-race).
+The chosen algorithm is "base", used by @davepl (Dave Plummer) in the YouTube video that spawned the drag-race.
 
 ![Algorithm](https://img.shields.io/badge/Algorithm-base-green) ![Faithfulness](https://img.shields.io/badge/Faithful-yes-green) ![Parallelism](https://img.shields.io/badge/Parallel-no-green) ![Bit count](https://img.shields.io/badge/Bits-1-green)
 
@@ -22,7 +23,7 @@ It's noteworthy that the "old" legacy code runs faster, it completes 84 passes b
 
 A publicly available Docker image with a [SAP Developer Edition for ABAP Platform]( https://blogs.sap.com/2021/02/15/sap-abap-platform-1909-developer-edition-available-soon/) should be released soon by SAP. Until then, one can only try the programs in his/her benevolent employer's SAP sandbox systems (if lucky enough to have developer access to them, that is).
 
-To put the above numbers in perspective: about 800 times slower than native executables written in new languages like Rust, Nim or Zig - see [results](https://plummerssoftwarellc.github.io/PrimeView/report?id=davepl-1657536492.json&hi=False&hf=False&hp=False&fi=&fp=mt&fa=wh~ot&ff=uf&fb=uk~ot&tp=False&sc=pp&sd=True) of today's (11.07.2022) comparison, performed admittedly on a more powerful CPU.  
+To put the above numbers in perspective: about 800 times slower than native executables implementing the same algorithm under the same parameters in languages like Rust, Nim or Zig - see [results](https://plummerssoftwarellc.github.io/PrimeView/report?id=davepl-1657536492.json&hi=False&hf=False&hp=False&fi=&fp=mt&fa=wh~ot&ff=uf&fb=uk~ot&tp=False&sc=pp&sd=True) of today's (11.07.2022) comparison, performed admittedly on a more powerful CPU. 
 
 ## Screenshots
 Sample initial screen in SAP GUI for primes up to 100 and full listing
