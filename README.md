@@ -1,5 +1,5 @@
 # primesABAP
-ABAP sample implementations of 'base' sieve algorithm for determining prime numbers up to a certain limit. ABAP (*Advanced Business Application Programming*, originally *Allgemeiner Berichts-Aufbereitungs-Prozessor*, German for "general report preparation processor") is a proprietary highe level (and intepreted!) language created by the German software company SAP SE. 
+ABAP sample implementations of 'base' sieve algorithm for determining prime numbers up to a certain limit. ABAP (*Advanced Business Application Programming*, originally *Allgemeiner Berichts-Aufbereitungs-Prozessor*, German for "general report preparation processor") is a proprietary high-level interpreted language created by the German software company SAP SE. 
 
 These source code are merely a way to showcase how ABAP code looks like - since the algorithm is very well known, it's easier to compare with code written in other languages. 
 
