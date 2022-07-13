@@ -5,15 +5,16 @@
 *&---------------------------------------------------------------------*
 REPORT zmdf_r_getprimes_oldstyle.
 
-PARAMETERS:
-  p_limit TYPE i DEFAULT 1000000,
-  p_print AS CHECKBOX.
-
 CONSTANTS:
-  yes_prime TYPE i VALUE 1,
-  not_prime TYPE i VALUE 0,
+  yes_prime TYPE i VALUE  1,
+  not_prime TYPE i VALUE  0,
   min_int4  TYPE i VALUE -2147483648,
-  max_int4  TYPE i VALUE  2147483647.
+  max_int4  TYPE i VALUE  2147483647,
+  a_million TYPE i VALUE  1000000.
+
+PARAMETERS:
+  p_limit TYPE i DEFAULT a_million,
+  p_print AS CHECKBOX.
 
 TYPES:
   BEGIN OF ts_exp_result,
@@ -52,14 +53,14 @@ FORM main.
     lv_temp2    TYPE c LENGTH 11,
     lv_output   TYPE c LENGTH 120.
 
-  IF p_limit GT 0.
+  IF p_limit GT 1.
     lv_limit = p_limit.
-  ELSEIF p_limit EQ 0.
-    lv_limit = 1000000 ##number_ok.
+  ELSEIF p_limit GE -1.
+    lv_limit = a_million.
   ELSEIF p_limit EQ min_int4.
     lv_limit = max_int4.
   ELSE.
-    lv_limit = cl_abap_math=>max_int4.
+    lv_limit = abs( p_limit ).
   ENDIF.
 
   GET RUN TIME FIELD lv_sta_time.
@@ -69,7 +70,7 @@ FORM main.
     ls_state-max_number = lv_limit.
     PERFORM execute_sieve CHANGING ls_state.
     GET RUN TIME FIELD lv_end_time.
-    lv_duration = ( lv_end_time - lv_sta_time ) / 1000000.
+    lv_duration = ( lv_end_time - lv_sta_time ) / a_million. "run time fields are µs
   ENDWHILE.
 
   IF p_print EQ abap_true.
