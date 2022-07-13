@@ -19,7 +19,7 @@ The [rule](https://github.com/PlummersSoftwareLLC/Primes/blob/drag-race/CONTRIBU
 - for modern ABAP: `zmdf;74;5.013153;1;algorithm=base,faithful=yes,bits=1`
 - for classic ABAP: `zmdf-classicABAP;84;5.055994;1;algorithm=base,faithful=yes,bits=1`
 
-The legacy code runs faster, it completes 84 passes before breaking the 5 seconds time limit, but the object-oriented code pays a performance penalty for the objects' constructor, which executes some processing that in the classical approach is done once and outside measurement. 
+The legacy code runs faster, it completes 84 passes before breaking the 5 seconds time limit, but the object-oriented code pays a performance penalty for the object's constructor, which executes some processing that in the classical approach is done once and outside measurement. 
 
 A publicly available Docker image with a [SAP Developer Edition for ABAP Platform]( https://blogs.sap.com/2021/02/15/sap-abap-platform-1909-developer-edition-available-soon/) should be released soon by SAP. Until then, one can only try the programs in his/her benevolent employer's SAP sandbox systems (if lucky enough to have developer access to them, that is).
 
