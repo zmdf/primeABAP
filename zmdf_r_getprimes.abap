@@ -149,17 +149,17 @@ CLASS lcl_test IMPLEMENTATION.
 *---------------------------------------------------------------------*
 METHOD run.
 
-  DATA:
-    passes   TYPE i,
-    duration TYPE p LENGTH 5 DECIMALS 6.
+  DATA(staTime)  = utclong_current( ).
+  DATA(endTime)  = utclong_current( ).
+  DATA(duration) = utclong_diff( high = endTime low = staTime ).
+  DATA(passes)   = 0.
 
-  GET RUN TIME FIELD DATA(startTime).
   WHILE duration LT 5.
     passes += 1.
     DATA(sieve) = NEW lcl_sieve( p_limit ).
     sieve->execute( ).
-    GET RUN TIME FIELD DATA(endTime).
-    duration = ( endTime - startTime ) / 1000000.
+    endTime  = utclong_current( ).
+    duration = utclong_diff(  high = endTime low = staTime ).
   ENDWHILE.
 
   IF p_print EQ abap_true.
