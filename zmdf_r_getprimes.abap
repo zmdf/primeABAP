@@ -5,13 +5,14 @@
 *&---------------------------------------------------------------------*
 REPORT zmdf_r_getprimes.
 
-PARAMETERS:
-  p_limit TYPE i DEFAULT 1000000,
-  p_print AS CHECKBOX.
-
 CONSTANTS:
   yesPrime TYPE i VALUE 1,
-  notPrime TYPE i VALUE 0.
+  notPrime TYPE i VALUE 0,
+  aMillion TYPE i VALUE 1000000.
+
+PARAMETERS:
+  p_limit TYPE i DEFAULT aMillion,
+  p_print AS checkbox.
 
 TYPES:
   BEGIN OF ts_valResult,
@@ -55,13 +56,10 @@ START-OF-SELECTION.
 CLASS lcl_sieve IMPLEMENTATION.
 *--------------------------------------------------------------------*
 METHOD constructor.
-  TRY.
-        maxNumber = COND #( WHEN maxNum GT 1 THEN maxNum
-                            WHEN maxNum GE 0 THEN 1000000
-                            ELSE abs( maxNum ) ).
-      CATCH cx_sy_arithmetic_overflow. "abs doesn't like min_int...
-        maxNumber = cl_abap_math=>max_int4.
-  ENDTRY.
+  maxNumber = COND #( WHEN maxNum GT  1 THEN maxNum
+                      WHEN maxNum GE -1 THEN aMillion
+                      WHEN maxNum EQ cl_abap_math=>min_int4 THEN cl_abap_math=>max_int4
+                      ELSE abs( maxNum ) ).
   validResults = VALUE #(
       ( limit = 10 count = 4 )
       ( limit = 100 count = 25 )
