@@ -53,6 +53,7 @@ FORM main.
     lv_temp2    TYPE c LENGTH 11,
     lv_output   TYPE c LENGTH 120.
 
+  "user input can't be trusted; only values between 2 and maxInt make sense
   IF p_limit GT 1.
     lv_limit = p_limit.
   ELSEIF p_limit GE -1.
@@ -65,10 +66,10 @@ FORM main.
 
   GET RUN TIME FIELD lv_sta_time.
   WHILE lv_duration LT 5.
-    ADD 1 TO lv_passes.
     CLEAR ls_state.
-    ls_state-max_number = lv_limit.
+    MOVE lv_limit TO ls_state-max_number. "yes, that too is possible in ABAP (use it as example only here, though)
     PERFORM execute_sieve CHANGING ls_state.
+    ADD 1 TO lv_passes.
     GET RUN TIME FIELD lv_end_time.
     lv_duration = ( lv_end_time - lv_sta_time ) / a_million. "run time fields are µs
   ENDWHILE.
@@ -97,23 +98,29 @@ ENDFORM.
 FORM execute_sieve CHANGING cs_state TYPE ts_state.
 
   DATA:
-    lv_boundary    TYPE i,
-    lv_potential_p TYPE i,
-    lv_current_p   TYPE i,
-    lv_bit_index   TYPE i,
-    lv_bit_value   TYPE i.
+    lv_boundary  TYPE i,
+    lv_prime     TYPE i,
+    lv_bit_index TYPE i,
+    lv_bit_value TYPE i.
 
   "prepare ...
-  lv_potential_p = 3.
-  lv_boundary    = sqrt( cs_state-max_number ).
+  lv_prime    = 3.
+  lv_boundary = sqrt( cs_state-max_number ).
   cs_state-sieve_size = cs_state-max_number / 2.
   cs_state-sieve_bits = bit-set( -1 * cs_state-sieve_size ).
 
   "execute algorithm
-  WHILE lv_potential_p LE lv_boundary.
+  WHILE lv_prime LE lv_boundary.
 
-    "locate next prime using the sieve
-    lv_bit_index = lv_potential_p / 2.
+    "eliminate odd multiples of this prime, starting with his square
+    lv_bit_index = ipow( base = lv_prime exp = 2 ) / 2.
+    WHILE lv_bit_index LE cs_state-sieve_size.
+      SET BIT lv_bit_index OF cs_state-sieve_bits TO not_prime.
+      ADD lv_prime TO lv_bit_index.
+    ENDWHILE.
+
+    "locate next prime, starting with next odd number
+    lv_bit_index = 1 + lv_prime / 2.
     WHILE lv_bit_index LE cs_state-sieve_size.
       GET BIT lv_bit_index OF cs_state-sieve_bits INTO lv_bit_value.
       IF lv_bit_value EQ yes_prime.
@@ -121,21 +128,7 @@ FORM execute_sieve CHANGING cs_state TYPE ts_state.
       ENDIF.
       ADD 1 TO lv_bit_index.
     ENDWHILE.
-    lv_current_p = 2 * lv_bit_index - 1.
-
-    IF lv_current_p GT lv_boundary.
-      EXIT. "job done
-    ENDIF.
-
-    "eliminate odd multiples of this prime, starting with his square
-    lv_bit_index = ipow( base = lv_current_p exp = 2 ) / 2.
-    WHILE lv_bit_index LE cs_state-sieve_size.
-      SET BIT lv_bit_index OF cs_state-sieve_bits TO not_prime.
-      ADD lv_current_p TO lv_bit_index.
-    ENDWHILE.
-
-    "restart with the next odd number
-    lv_potential_p = lv_current_p + 2.
+    lv_prime = 2 * lv_bit_index - 1.
 
   ENDWHILE.
 

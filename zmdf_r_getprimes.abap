@@ -56,6 +56,7 @@ START-OF-SELECTION.
 CLASS lcl_sieve IMPLEMENTATION.
 *--------------------------------------------------------------------*
 METHOD constructor.
+  "user input can't be trusted; only values between 2 and maxInt make sense
   maxNumber = COND #( WHEN maxNum GT  1 THEN maxNum
                       WHEN maxNum GE -1 THEN aMillion
                       WHEN maxNum EQ cl_abap_math=>min_int4 THEN cl_abap_math=>max_int4
@@ -76,16 +77,23 @@ ENDMETHOD.
 METHOD execute.
 
   "prepare...
-  DATA(potentialPrime) = 3.
-  DATA(stop) = CONV i( sqrt( maxNumber ) ).
-  sieveSize  = maxNumber / 2.
-  sieveBits  = bit-set( -1 * sieveSize ).
+  DATA(prime) = 3.
+  DATA(stop)  = CONV i( sqrt( maxNumber ) ).
+  sieveSize   = maxNumber / 2.
+  sieveBits   = bit-set( -1 * sieveSize ).
 
   "execute algorithm
-  WHILE potentialPrime LE stop.
+  WHILE prime LE stop.
 
-    "locate next prime
-    DATA(bitIdx) = potentialPrime / 2.
+    "eliminate odd multiples of this prime, starting with his square
+    DATA(bitIdx) = ipow( base = prime exp = 2 ) / 2.
+    WHILE bitIdx LE sieveSize.
+      SET BIT bitIdx OF sieveBits TO notPrime.
+      bitIdx += prime.
+    ENDWHILE.
+
+    "locate next prime, starting with next odd number
+    bitIdx = 1 + prime / 2.
     WHILE bitIdx LE sieveSize.
       GET BIT bitIdx OF sieveBits INTO DATA(isPrime).
       IF isPrime EQ yesPrime.
@@ -93,21 +101,7 @@ METHOD execute.
       ENDIF.
       bitIdx += 1.
     ENDWHILE.
-    DATA(currPrime) = 2 * bitIdx - 1.
-
-    IF currPrime GT stop.
-      EXIT. "job done, zug-zug
-    ENDIF.
-
-    "eliminate odd multiples of this prime, starting with his square
-    bitIdx = ipow( base = currPrime exp = 2 ) / 2.
-    WHILE bitIdx LE sieveSize.
-      SET BIT bitIdx OF sieveBits TO notPrime.
-      bitIdx += currPrime.
-    ENDWHILE.
-
-    "restart with the next odd number
-    potentialPrime = currPrime + 2.
+    prime = 2 * bitIdx - 1.
 
   ENDWHILE.
 
@@ -153,9 +147,9 @@ METHOD run.
   DATA(passes)   = 0.
 
   WHILE duration LT 5.
-    passes += 1.
     DATA(sieve) = NEW lcl_sieve( p_limit ).
     sieve->execute( ).
+    passes  += 1.
     endTime  = utclong_current( ).
     duration = utclong_diff(  high = endTime low = staTime ).
   ENDWHILE.
